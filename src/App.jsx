@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   const [memberName, setMemberName] = useState('');
+  const [memberTrait, setMemberTrait] = useState('');
   const [preQuestions, setPreQuestions] = useState(`- 이번 1on1에서 이야기하고 싶은 주제는?
 - 최근 가장 어려웠던 일은?
 - 더 도움 받고 싶은 점은?`);
@@ -28,14 +29,18 @@ ${goal}
 ---
 
 🧭 [Before - 사전 준비]  
+팀원(${memberName})은 아래와 같은 특징을 가지고 있어요:  
+${memberTrait}  
+
 1on1 전, 아래 사전 질문을 참고하여 생각을 정리해 주세요:  
 ${preQuestions}
+
+→ 우선, 위 질문에 대해 팀원(${memberName})의 입장에서 먼저 답변해주세요.
 
 ---
 
 👂 [First 10 - 팀원의 시간]  
 내가 아래 질문을 할 테니, 팀원(${memberName})으로서 진솔하게 답해주세요.  
-
 > ${memberName}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인가요?  
 > 어떤 고민이나 도전이 있었나요?
 
@@ -47,13 +52,13 @@ ${preQuestions}
 내가 이야기한 내용을 듣고 너는 팀원으로서 감정/생각/의견을 말해줘.
 
 ✅ [Last 10 - 방향 설정]  
-내가 대화를 정리하고 다음 대화를 이어가기 위한 포인트를 이야기할 거야.  
-너는 팀원(${memberName})으로서 이에 대해 응답해줘.
+내가 대화를 정리하고 대화를 이어갈 수 있도록 마무리 멘트를 할 테니, 그에 맞게 응답해줘.
+(1) 팀원(${memberName}): ~  
+(2) 팀장(우리): ~
 
 ---
 
 🧾 대화 종료 후 아래 분석을 너가 직접 작성해줘:  
-
 (1) 이번 대화는 10:10:10 1on1 모델의 각 단계에 어떻게 부합하는지 설명해주세요.  
 (2) 대화에서 사용된 지시, 질문, 공감 언어의 사용 비율은 어떤가요?  
 (3) 대화의 전반적인 분위기와 팀원 반응의 뉘앙스를 평가해주세요.`;
@@ -79,6 +84,9 @@ ${preQuestions}
 
       <label>팀원 이름</label>
       <input type="text" value={memberName} onChange={(e) => setMemberName(e.target.value)} placeholder="예: 민수" />
+
+      <label>팀원의 특징</label>
+      <textarea value={memberTrait} onChange={(e) => setMemberTrait(e.target.value)} placeholder="예: 책임감이 강하고 꼼꼼함" />
 
       <label>사전 질문 항목</label>
       <textarea value={preQuestions} onChange={(e) => setPreQuestions(e.target.value)} />

@@ -86,7 +86,7 @@ ${preQuestions}
       <input type="text" value={memberName} onChange={(e) => setMemberName(e.target.value)} placeholder="예: 민수" />
 
       <label>팀원의 특징</label>
-      <textarea value={memberTrait} onChange={(e) => setMemberTrait(e.target.value)} placeholder="예: 책임감이 강하고 꼼꼼함" />
+      <textarea value={memberTrait} onChange={(e) => setMemberTrait(e.target.value)} placeholder="예: 입사 10년차 책임, 요즘 커리어에 대한 고민이 많음, 책임감이 강하고 꼼꼼함" />
 
       <label>사전 질문 항목</label>
       <textarea value={preQuestions} onChange={(e) => setPreQuestions(e.target.value)} />

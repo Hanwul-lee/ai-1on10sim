@@ -8,47 +8,11 @@ function App() {
 - 더 도움 받고 싶은 점은?`);
   const [situation, setSituation] = useState('');
   const [goal, setGoal] = useState('');
-  const [managerSecond10, setManagerSecond10] = useState('');
-  const [managerLast10, setManagerLast10] = useState('');
   const [prompt, setPrompt] = useState('');
   const promptRef = useRef(null);
 
   const handleGenerate = () => {
-    const newPrompt = `지금부터 너는 우리 팀의 팀원 역할을 맡아줘.
-이번 1on1은 아래 구조로 진행될 거야. 역할에 맞게 대화에 참여해줘.
-
----
-
-📄 현재 상황:
-${situation}
-
-🎯 이번 대화의 목적:
-${goal}
-
----
-
-🧭 [Before - 사전 준비]
-1on1 전, 아래 사전 질문을 참고하여 생각을 정리해 주세요:
-
-${preQuestions}
-
----
-
-👂 [First 10 - 팀원의 시간]
-${memberName}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인가요?
-어떤 고민이나 도전이 있었나요?
-
-🧠 [Second 10 - 팀장의 시간]
-${managerSecond10 || '그 경험을 통해 내가 느낀 점은…\n앞으로 이런 방향으로 도전해보는 건 어떨까요?'}
-
-✅ [Last 10 - 방향 설정]
-오늘 대화를 정리하면 다음과 같은 Action Item이 남아요:
-(1) 팀원: ~
-(2) 팀장: ~
-
-${managerLast10 || ''}
-
-이제 위 대화를 기반으로 다음 세 가지 요청에 대해 분석해주세요.`;
+    const newPrompt = `지금부터 너는 우리 팀의 팀원 역할을 맡아줘.\n이번 1on1은 아래 구조로 진행될 거야. 역할에 맞게 대화에 참여해줘.\n\n---\n\n📄 현재 상황:\n${situation}\n\n🎯 이번 대화의 목적:\n${goal}\n\n---\n\n🧭 [Before - 사전 준비]\n1on1 전, 아래 사전 질문을 참고하여 생각을 정리해 주세요:\n\n${preQuestions}\n\n---\n\n👂 [First 10 - 팀원의 시간]\n${memberName}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인가요?\n어떤 고민이나 도전이 있었나요?\n\n🧠 [Second 10 - 팀장의 시간]\n팀장님, 위 내용을 바탕으로 팀원의 경험에 대해 피드백하거나 조언해주세요.\n\n💬 [Second 10 - 팀장의 시간에 대한 팀원 응답]\n팀원(${memberName}) 역할로 팀장의 말에 공감하거나 자신의 생각을 이어가 주세요.\n\n✅ [Last 10 - 방향 설정]\n이번 대화를 정리하며 다음과 같은 Action Item을 제안해 주세요.\n(1) 팀원(${memberName}): ~\n(2) 팀장(우리): ~\n\n이제 위 대화를 기반으로 다음 세 가지 요청에 대해 분석해주세요.\n(1) 이 대화에 적합한 리더십 커뮤니케이션 모델은 무엇인가요?\n(2) 대화에서 사용된 지시, 질문, 공감 언어의 사용 비율은 어떤가요?\n(3) 대화의 전반적인 분위기와 팀원 반응의 뉘앙스를 평가해주세요.`;
 
     setPrompt(newPrompt);
   };
@@ -80,12 +44,6 @@ ${managerLast10 || ''}
 
       <label>대화 목적</label>
       <textarea value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="예: 동기부여, 정서적 지지" />
-
-      <label>팀장의 발언 (Second 10)</label>
-      <textarea value={managerSecond10} onChange={(e) => setManagerSecond10(e.target.value)} placeholder="예: 그 경험을 통해 내가 느낀 점은..." />
-
-      <label>팀장의 발언 (Last 10)</label>
-      <textarea value={managerLast10} onChange={(e) => setManagerLast10(e.target.value)} placeholder="예: 오늘 대화를 정리하면 다음과 같은 Action Item이 남아요..." />
 
       <button onClick={handleGenerate}>프롬프트 생성</button>
 

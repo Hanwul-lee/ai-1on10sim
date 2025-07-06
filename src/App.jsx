@@ -1,65 +1,72 @@
 import { useState } from 'react';
+import './App.css';
 
 function App() {
+  const [name, setName] = useState('');
+  const [preQuestions, setPreQuestions] = useState('');
   const [situation, setSituation] = useState('');
   const [goal, setGoal] = useState('');
   const [prompt, setPrompt] = useState('');
 
   const handleGenerate = () => {
-    const result = `
-[대화 상황 설명]
-${situation}
+    const newPrompt = `
+[1on1 시뮬레이션 프롬프트 생성]
 
-[대화 목적]
-${goal}
+팀원 이름: ${name}
+사전 질문 항목:
+${preQuestions}
 
-[1on1 대화 프롬프트]
-상기 상황과 대화 목적을 참고하여, 팀장으로서 1on1 미팅에서 활용할 수 있는 적절한 오프닝 질문, 대화 흐름을 위한 후속 질문, 마무리 질문을 포함한 1on1 대화 프롬프트를 작성해줘. ChatGPT가 팀장을 대신해 실제 대화를 이끌어주는 것처럼 자연스럽고 명확하게 써줘.
-    `.trim();
+상황 설명: ${situation}
+대화 목적: ${goal}
 
-    setPrompt(result);
+→ 위 내용을 기반으로, 1on1 코칭형 질문 3개를 생성해주세요.
+    `;
+    setPrompt(newPrompt);
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif' }}>
-      <h2>1on1 프롬프트 생성기</h2>
+    <div className="container">
+      <h1>1on1 시뮬레이션 프롬프트 생성기</h1>
 
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label>상황 설명</label><br />
-        <textarea
-          rows={3}
-          style={{ width: '100%' }}
-          placeholder="예: 성과평가가 다가와서 마음이 혼란"
-          value={situation}
-          onChange={(e) => setSituation(e.target.value)}
-        />
-      </div>
+      <label>팀원 이름</label>
+      <input
+        type="text"
+        placeholder="예: 민수"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label>대화 목적</label><br />
-        <textarea
-          rows={3}
-          style={{ width: '100%' }}
-          placeholder="예: 동기부여, 정서적 지지"
-          value={goal}
-          onChange={(e) => setGoal(e.target.value)}
-        />
-      </div>
+      <label>사전 질문 항목</label>
+      <textarea
+        rows={3}
+        placeholder={`예:\n- 이번 1on1에서 이야기하고 싶은 주제는?\n- 최근 가장 어려웠던 일은?\n- 더 도움 받고 싶은 점은?`}
+        value={preQuestions}
+        onChange={(e) => setPreQuestions(e.target.value)}
+      />
 
-      <button onClick={handleGenerate} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
-        프롬프트 생성
-      </button>
+      <label>상황 설명</label>
+      <textarea
+        rows={2}
+        placeholder="예: 성과평가가 다가와서 마음이 혼란"
+        value={situation}
+        onChange={(e) => setSituation(e.target.value)}
+      />
+
+      <label>대화 목적</label>
+      <textarea
+        rows={2}
+        placeholder="예: 동기부여, 정서적 지지"
+        value={goal}
+        onChange={(e) => setGoal(e.target.value)}
+      />
+
+      <button onClick={handleGenerate}>프롬프트 생성</button>
 
       {prompt && (
-        <div style={{ marginTop: '2rem' }}>
-          <h3>📝 생성된 프롬프트</h3>
-          <textarea
-            rows={10}
-            style={{ width: '100%' }}
-            value={prompt}
-            readOnly
-          />
-        </div>
+        <>
+          <label>생성된 프롬프트</label>
+          <textarea rows={10} readOnly value={prompt} />
+        </>
       )}
     </div>
   );

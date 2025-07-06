@@ -14,7 +14,7 @@ function App() {
 
   const handleGenerate = () => {
     const newPrompt = `지금부터 너는 우리 팀의 **팀원 역할(${memberName})**을 맡아줘.  
-나는 팀장 역할로 대화를 이끌 거야.  
+나는 팀장(우리) 역할로 대화를 이끌 거야.  
 이번 1on1은 아래 구조로 진행될 거야. 너는 팀원 입장에서 진솔하게 응답해줘.  
 마지막에는 아래 분석 요청에 따라 결과를 정리해줘.
 
@@ -30,45 +30,39 @@ ${goal}
 
 🧭 [Before - 사전 준비]  
 팀원(${memberName})은 아래와 같은 특징을 가지고 있어요:  
-${memberTrait}
+${memberTrait}  
 
-아래 사전 질문에 대해 ${memberName}의 입장에서 먼저 응답해주세요:  
+1on1 전, 아래 사전 질문을 참고하여 생각을 정리해 주세요:  
 ${preQuestions}
 
----
-
-🙋‍♂️ [1on1 시작 전 인사]  
-→ 나는 팀장(우리)야. ${memberName}님, 오늘 1on1 시작해보자. 요즘 마음은 좀 어때요?
+→ 우선, 위 질문에 대해 팀원(${memberName})의 입장에서 먼저 답변해주세요. 이후 대화를 시작해볼게요. 팀장(우리)이 인사를 건네면 인사로 응답하고 자연스럽게 대화를 이어가주세요.
 
 ---
 
 👂 [First 10 - 팀원의 시간]  
-이제 본격적으로 이야기해보자. 아래 질문에 답해줘요.
-
+내가 아래 질문을 할 테니, 팀원(${memberName})으로서 진솔하게 답해주세요.  
 > ${memberName}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인가요?  
 > 어떤 고민이나 도전이 있었나요?
 
 🧠 [Second 10 - 팀장의 시간]  
-내가 팀장(우리)로서 ${memberName}님의 이야기에 공감하거나 조언을 해줄게요.  
-당신은 팀원(${memberName})의 입장에서 진솔하게 응답해주세요.
+내가 팀장(우리)으로서 너의 이야기에 공감하거나 조언을 해줄 거야.  
+너는 팀원(${memberName})의 입장에서 응답해줘.
 
 🗨️ [Second 10 - 팀장의 말에 대한 팀원 응답]  
-내가 이야기한 내용을 듣고 ${memberName}님은 팀원으로서 감정/생각/의견을 말해줘요.
+내가 이야기한 내용을 듣고 너는 팀원으로서 감정/생각/의견을 말해줘.
 
 ✅ [Last 10 - 방향 설정]  
-이제 대화를 정리하면서 앞으로의 방향을 이야기할게요. 내가 먼저 Action Item이나 다짐을 제시할 테니,  
-${memberName}님도 본인의 다짐을 공유해주세요.
-
+내가 대화를 정리하고 대화를 이어갈 수 있도록 마무리 멘트를 할 테니, 그에 맞게 응답해줘.  
 (1) 팀원(${memberName}): ~  
-(2) 팀장: ~
+(2) 팀장(우리): ~
 
 ---
 
 🧾 대화 종료 후 아래 분석을 너가 직접 작성해줘:  
 (1) 이번 대화는 10:10:10 1on1 모델의 각 단계에 어떻게 부합하는지 설명해주세요.  
 (2) 대화에서 사용된 지시, 질문, 공감 언어의 사용 비율은 어떤가요?  
-(3) 대화의 전반적인 분위기와 팀원 반응의 뉘앙스를 평가해주세요.
-`;
+(3) 대화의 전반적인 분위기와 팀원 반응의 뉘앙스를 평가해주세요.  
+(4) 팀장의 대화 방식에서 개선하거나 유지하면 좋을 점을 정리해 제안해주세요.`;
 
     setPrompt(newPrompt);
   };
@@ -81,7 +75,8 @@ ${memberName}님도 본인의 다짐을 공유해주세요.
 
   const handleCopy = () => {
     navigator.clipboard.writeText(prompt).then(() => {
-      alert('프롬프트가 복사되었습니다.');
+      alert('프롬프트가 복사되었습니다. ChatGPT로 이동합니다.');
+      window.open('https://chat.openai.com/', '_blank');
     });
   };
 
@@ -93,7 +88,7 @@ ${memberName}님도 본인의 다짐을 공유해주세요.
       <input type="text" value={memberName} onChange={(e) => setMemberName(e.target.value)} placeholder="예: 민수" />
 
       <label>팀원의 특징</label>
-      <textarea value={memberTrait} onChange={(e) => setMemberTrait(e.target.value)} placeholder="예: 입사 10년차 책임, 요즘 커리어에 대한 고민이 많음, 책임감이 강하고 꼼꼼함" />
+      <textarea value={memberTrait} onChange={(e) => setMemberTrait(e.target.value)} placeholder="예: 책임감이 강하고 꼼꼼함" />
 
       <label>사전 질문 항목</label>
       <textarea value={preQuestions} onChange={(e) => setPreQuestions(e.target.value)} />
@@ -110,7 +105,7 @@ ${memberName}님도 본인의 다짐을 공유해주세요.
         <div className="output" ref={promptRef}>
           <h2>생성된 프롬프트</h2>
           <textarea value={prompt} readOnly rows={20} />
-          <button onClick={handleCopy}>복사하기</button>
+          <button onClick={handleCopy}>복사 및 ChatGPT 열기</button>
         </div>
       )}
     </div>

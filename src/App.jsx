@@ -60,7 +60,7 @@ ${preQuestions}
 ${memberName}님도 본인의 다짐을 공유해주세요.
 
 (1) 팀원(${memberName}): ~  
-(2) 팀장(우리): ~
+(2) 팀장: ~
 
 ---
 

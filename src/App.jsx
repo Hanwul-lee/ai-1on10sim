@@ -3,7 +3,9 @@ import './App.css';
 
 function App() {
   const [name, setName] = useState('');
-  const [questions, setQuestions] = useState('');
+  const [questions, setQuestions] = useState(
+    `- 이번 1on1에서 이야기하고 싶은 주제는?\n- 최근 가장 어려웠던 일은?\n- 더 도움 받고 싶은 점은?`
+  );
   const [situation, setSituation] = useState('');
   const [goal, setGoal] = useState('');
   const [generatedPrompt, setGeneratedPrompt] = useState('');
@@ -63,8 +65,7 @@ ${name}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인가요
       <div className="form-group">
         <label>사전 질문 항목</label>
         <textarea
-          rows={3}
-          placeholder={`예:\n- 이번 1on1에서 이야기하고 싶은 주제는?\n- 최근 가장 어려웠던 일은?\n- 더 도움 받고 싶은 점은?`}
+          rows={4}
           value={questions}
           onChange={(e) => setQuestions(e.target.value)}
         />

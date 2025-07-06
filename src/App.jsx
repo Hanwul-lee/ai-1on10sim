@@ -8,6 +8,8 @@ function App() {
 - 더 도움 받고 싶은 점은?`);
   const [situation, setSituation] = useState('');
   const [goal, setGoal] = useState('');
+  const [managerSecond10, setManagerSecond10] = useState('');
+  const [managerLast10, setManagerLast10] = useState('');
   const [prompt, setPrompt] = useState('');
   const promptRef = useRef(null);
 
@@ -37,19 +39,16 @@ ${memberName}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인
 어떤 고민이나 도전이 있었나요?
 
 🧠 [Second 10 - 팀장의 시간]
-그 경험을 통해 내가 느낀 점은…
-앞으로 이런 방향으로 도전해보는 건 어떨까요?
+${managerSecond10 || '그 경험을 통해 내가 느낀 점은…\n앞으로 이런 방향으로 도전해보는 건 어떨까요?'}
 
 ✅ [Last 10 - 방향 설정]
 오늘 대화를 정리하면 다음과 같은 Action Item이 남아요:
 (1) 팀원: ~
 (2) 팀장: ~
 
-이제부터 팀장으로서 위 프롬프트 내용을 기반으로 팀원 역할의 GPT와 대화를 시작하세요.
-대화 종료 후, GPT에게 다음 내용을 요청하세요:
-- 이번 대화에서 사용된 1on1 대화 모델의 적합성 분석 (예: CCC, AIM, 10:10:10)
-- 팀장의 언어 유형 분석 (지시, 질문, 공감 언어 비율)
-- 리더십적 관점에서 피드백 요약`;
+${managerLast10 || ''}
+
+이제 위 대화를 기반으로 다음 세 가지 요청에 대해 분석해주세요.`;
 
     setPrompt(newPrompt);
   };
@@ -81,6 +80,12 @@ ${memberName}님, 이번 주 경험 중 가장 의미 있었던 일은 무엇인
 
       <label>대화 목적</label>
       <textarea value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="예: 동기부여, 정서적 지지" />
+
+      <label>팀장의 발언 (Second 10)</label>
+      <textarea value={managerSecond10} onChange={(e) => setManagerSecond10(e.target.value)} placeholder="예: 그 경험을 통해 내가 느낀 점은..." />
+
+      <label>팀장의 발언 (Last 10)</label>
+      <textarea value={managerLast10} onChange={(e) => setManagerLast10(e.target.value)} placeholder="예: 오늘 대화를 정리하면 다음과 같은 Action Item이 남아요..." />
 
       <button onClick={handleGenerate}>프롬프트 생성</button>
 
